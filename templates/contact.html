@@ -1,0 +1,105 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="page-wrapper" class="container">
+  <div id="main" class="wrapper style1">
+    <header class="major">
+      <h2>Contact Us</h2>
+      <p>Reach out, let's know how to be of service</p>
+    </header>
+    <section class="form">
+      <form method="post" action="contact">
+        <div class="row gtr-uniform gtr-50">
+          <div class="col-6 col-12-xsmall">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value=""
+              required
+              placeholder="Name"
+            />
+          </div>
+          <div class="col-6 col-12-xsmall">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value=""
+              required
+              placeholder="Email"
+            />
+          </div>
+          <div class="col-12">
+            <select name="category" id="category">
+              <option value="">- Category -</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="shipping">Shipping</option>
+              <option value="administration">Administration</option>
+              <option value="energy">Energy</option>
+            </select>
+          </div>
+          <div class="col-4 col-12-medium">
+            <input
+              type="radio"
+              value="low"
+              id="priority-low"
+              name="priority"
+              checked
+            />
+            <label for="priority-low">Low Priority</label>
+          </div>
+          <div class="col-4 col-12-medium">
+            <input
+              type="radio"
+              value="normal"
+              id="priority-normal"
+              name="priority"
+            />
+            <label for="priority-normal">Normal Priority</label>
+          </div>
+          <div class="col-4 col-12-medium">
+            <input
+              type="radio"
+              value="high"
+              id="priority-high"
+              name="priority"
+            />
+            <label for="priority-high">High Priority</label>
+          </div>
+          <div class="col-6 col-12-medium">
+            <input type="hidden" id="copyHidden" value="no" name="copy" />
+            <input type="checkbox" id="copy" value="yes" name="copy" />
+            <label for="copy">Email me a copy of this message</label>
+          </div>
+          <div class="col-6 col-12-medium">
+            <input
+              type="checkbox"
+              id="human"
+              value="yes"
+              required
+              name="human"
+            />
+            <label for="human">I am a human and not a robot</label>
+          </div>
+          <div class="col-12">
+            <textarea
+              name="message"
+              id="message"
+              required
+              placeholder="Enter your message"
+              rows="8"
+            ></textarea>
+          </div>
+          <div class="col-12">
+            <ul class="actions">
+              <li>
+                <input type="submit" value="Send Message" class="primary" />
+              </li>
+              <li><input type="reset" value="Reset" /></li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}
