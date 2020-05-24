@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for
 from forms import RegistrationForm
 from mailer import send_mail
 from database import create_contact_table, update_contact_table, create_reg_table, update_reg_table
+from database import create_mailing_table, update_mailing_table
 from password import password_hash
 
 
@@ -17,6 +18,21 @@ db = 'contact'
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+
+@app.route('/mailing', methods=['GET', 'POST'])
+def mailing():
+    if request.method == 'POST':
+        mailing_data = request.form.to_dict()
+        table_name = 'mailing_list'
+
+        create_mailing_table(db, table_name)
+        update_mailing_table(db, table_name, mailing_data)
+
+        return redirect('/home.html')
+
+    else:
+        return 'Something went wrong'
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -55,16 +71,25 @@ def contact():
         contact_data = request.form.to_dict()
         table_name = 'query'
 
-        # Database creation and storage of data
+        # Database table creation and storage of data
         create_contact_table(db, table_name)
+
+        # Query the checkbox name copy
+        for response in request.form.getlist('copy'):
+            if response == 'yes':
+                contact_data['copy'] = 'yes'
+
+                send_mail(contact_data['email'], contact_data['message'])
+                update_contact_table(db, table_name, contact_data)
+
+                return redirect('/success.html')
+
+        # Updates database if copy is unchecked
+        contact_data['copy'] = 'no'
         update_contact_table(db, table_name, contact_data)
 
-        # Send a copy of the mail to the contact if copy is true
-        if contact_data['copy'] == 'yes':
-            send_mail(contact_data['email'], contact_data['message'])
-
-        # Redirects on successful execution
         return redirect('/success.html')
+
     else:
         # Redirects on failed execution
         return "Something went wrong"

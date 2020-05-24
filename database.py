@@ -121,3 +121,50 @@ def update_reg_table(db, table_name, data):
 
     finally:
         conn.close()
+
+
+# Create the mailing table in the database
+def create_mailing_table(db, table_name):
+    try:
+        conn = connect_db('root', 'password', '127.0.0.1', 'contact')
+        cursor = conn.cursor()
+
+        cursor.execute(f"""CREATE TABLE IF NOT EXISTS {db}.{table_name}(
+                        id SERIAL NOT NULL,
+                        email VARCHAR(50) NOT NULL)""")
+
+    except Exception as err:
+        return f'The connection returned the following error: {err}'
+
+
+# Updates the mailing database table with the mail data
+def update_mailing_table(db, table_name, data):
+    try:
+        conn = connect_db('root', 'password', '127.0.0.1', 'contact')
+        cursor = conn.cursor()
+
+        query = f"""INSERT INTO {db}.{table_name}(email) VALUES(%s)"""
+        table_values = data['email']
+
+        cursor.execute(query, table_values)
+        conn.commit()
+        print('done')
+
+    except Exception as err:
+        return f'The connection returned the following error: {err}'
+
+    finally:
+        conn.close()
+
+
+# conn = connect_db('root', 'password', '127.0.0.1', 'contact')
+# cursor = conn.cursor()
+
+# data = {'id': 1, 'email': 'seunakinbo@gmail.com'}
+# table = 'mailing_list'
+# db = 'contact'
+# query = f"""SELECT * FROM {db}.{table}"""
+
+# print(cursor.execute(query))
+# update_mailing_table(db, table, data)
+# print(cursor.execute(query))
