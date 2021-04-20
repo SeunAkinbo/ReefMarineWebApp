@@ -31,7 +31,7 @@ Pillow==7.1.2
 pluggy==0.13.1
 pre-commit==2.3.0
 protobuf==3.11.3
-py==1.8.1
+py==1.10.0
 pycodestyle==2.5.0
 pylint==2.4.4
 pyparsing==2.4.7
